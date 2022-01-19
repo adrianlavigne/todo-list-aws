@@ -58,6 +58,15 @@ class TestDatabaseFunctions(unittest.TestCase):
         #self.assertIn('todoTable', self.table_local.name)
         print ('End: test_table_exists')
         
+    def test_table_fails(self):
+        print ('---------------------')
+        print ('Start: test_table_fails')
+        response = get_table()
+        # check if the table name is 'ToDo'
+        self.assertIn(200, response['statusCode'])
+        #self.assertIn('todoTable', self.table_local.name)
+        print ('End: test_table_fails')
+        
 
     def test_put_todo(self):
         print ('---------------------')
