@@ -23,7 +23,7 @@ Globals:
     Environment:
       Variables:
         DYNAMODB_TABLE: !Ref TodosDynamoDbTable
-        ENDPOINT_OVERRIDE: ""
+        ENDPOINT_OVERRIDE: "http://127.0.0.1/"
     
 Resources:
   
