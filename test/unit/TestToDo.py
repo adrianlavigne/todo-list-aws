@@ -151,7 +151,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         # Table mock
         responsePut = put_item(self.text, self.dynamodb)
         print ('Response PutItem' + str(responsePut))
-        with self.assertRaises(AmazonServiceException):
+        with self.assertRaises(Exception):
             update_item(
                 updated_text,
                 "",
