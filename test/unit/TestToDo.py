@@ -56,20 +56,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         # check if the table name is 'ToDo'
         self.assertIn(tableName, self.table.name)
         #self.assertIn('todoTable', self.table_local.name)
-        print ('End: test_table_exists')
-        
-    def test_table_fails(self):
-        print ('---------------------')
-        print ('Start: test_table_fails')
-        os.environ['DYNAMODB_TABLE'] = "http://localhost:8000/"
-        # Testing file functions
-        from src.todoList import get_table
-        response = get_table(None)
-        # check if the table name is 'ToDo'
-        self.assertIn(200, response['statusCode'])
-        #self.assertIn('todoTable', self.table_local.name)
-        print ('End: test_table_fails')
-        
+        print ('End: test_table_exists')       
 
     def test_put_todo(self):
         print ('---------------------')
@@ -209,9 +196,19 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Start: test_delete_todo_error')
         from src.todoList import delete_item
         # Testing file functions
-        self.assertRaises(TypeError, delete_item("", self.dynamodb))
+        self.assertRaises(TypeError, delete_item("123", self.dynamodb))
         print ('End: test_delete_todo_error')
-
+        
+#    def test_table_fails(self):
+#        print ('---------------------')
+#        print ('Start: test_table_fails')
+#        # Testing file functions
+#        from src.todoList import get_table
+#        response = get_table(None)
+#        # check if the table name is 'ToDo'
+#        self.assertIn(200, response['statusCode'])
+#        #self.assertIn('todoTable', self.table_local.name)
+#        print ('End: test_table_fails')
 
 
 if __name__ == '__main__':
