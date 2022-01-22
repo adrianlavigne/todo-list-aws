@@ -152,7 +152,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         responsePut = put_item(self.text, self.dynamodb)
         print ('Response PutItem' + str(responsePut))
         with self.assertRaises(Exception):
-            get_item("5", self.dynamodb)
+            item = get_item("5", self.dynamodb)
  #       self.assertRaises(
  #           TypeError,
  #           update_item(
