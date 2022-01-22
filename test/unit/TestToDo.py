@@ -61,6 +61,7 @@ class TestDatabaseFunctions(unittest.TestCase):
     def test_table_fails(self):
         print ('---------------------')
         print ('Start: test_table_fails')
+        os.environ['DYNAMODB_TABLE'] = "http://localhost:8000/"
         # Testing file functions
         from src.todoList import get_table
         response = get_table(None)
