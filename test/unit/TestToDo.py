@@ -151,9 +151,8 @@ class TestDatabaseFunctions(unittest.TestCase):
         # Table mock
         responsePut = put_item(self.text, self.dynamodb)
         print ('Response PutItem' + str(responsePut))
-        self.assertRaises(
-            Exception,
-            update_item,
+        with self.assertRaises(Exception):
+            update_item(
                 updated_text,
                 "",
                 "false",
