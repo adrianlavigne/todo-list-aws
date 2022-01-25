@@ -153,20 +153,20 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Response PutItem' + str(responsePut))
         with self.assertRaises(Exception):
             item = get_item("5", self.dynamodb)
- #       self.assertRaises(
- #           TypeError,
- #           update_item(
- #               "",
- #               self.uuid,
- #               "false",
- #               self.dynamodb))
- #       self.assertRaises(
- #           Exception,
- #           update_item(
- #               updated_text,
- #               self.uuid,
- #               "",
- #               self.dynamodb))
+        self.assertRaises(
+            TypeError,
+            update_item(
+                "",
+                self.uuid,
+                "false",
+                self.dynamodb))
+        self.assertRaises(
+            Exception,
+            update_item(
+                updated_text,
+                self.uuid,
+                "",
+                self.dynamodb))
         print ('End: atest_update_todo_error')
 
     def test_delete_todo(self):
@@ -194,16 +194,16 @@ class TestDatabaseFunctions(unittest.TestCase):
         self.assertRaises(TypeError, delete_item("123", self.dynamodb))
         print ('End: test_delete_todo_error')
         
-#    def test_table_fails(self):
-#        print ('---------------------')
-#        print ('Start: test_table_fails')
-#        # Testing file functions
-#        from src.todoList import get_table
-#        response = get_table(None)
-#        # check if the table name is 'ToDo'
-#        self.assertIn(200, response['statusCode'])
-#        #self.assertIn('todoTable', self.table_local.name)
-#        print ('End: test_table_fails')
+    def test_table_fails(self):
+        print ('---------------------')
+        print ('Start: test_table_fails')
+        # Testing file functions
+        from src.todoList import get_table
+        response = get_table(None)
+        # check if the table name is 'ToDo'
+        self.assertIn(200, response['statusCode'])
+        #self.assertIn('todoTable', self.table_local.name)
+        print ('End: test_table_fails')
 
 
 if __name__ == '__main__':
