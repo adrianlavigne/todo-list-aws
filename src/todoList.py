@@ -111,7 +111,7 @@ def delete_item(key, dynamodb=None):
         table.delete_item(
             Key={
                 'id': key
-            }
+            },
             ConditionExpression='attribute_exists(:id)',
             ExpressionAttributeValues={
               ':id': key,
