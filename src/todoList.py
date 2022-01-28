@@ -93,13 +93,11 @@ def update_item(key, text, checked, dynamodb=None):
                 'id': key
             },
             ConditionExpression='attribute_exists(:id)',
-            ExpressionAttributeValues={
-              ':id': key,
-            },
             ExpressionAttributeNames={
               '#todo_text': 'text',
             },
             ExpressionAttributeValues={
+              ':id': key,
               ':text': text,
               ':checked': checked,
               ':updatedAt': timestamp,
