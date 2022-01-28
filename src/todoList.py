@@ -109,7 +109,8 @@ def delete_item(key, dynamodb=None):
                 'id': key
             }
         )
-
+    except ClientError as e:
+        print(e.response['Error']['Message'])
     else:
         return
 
