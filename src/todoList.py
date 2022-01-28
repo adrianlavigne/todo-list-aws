@@ -8,28 +8,22 @@ from botocore.exceptions import ClientError
 
 
 def get_table(dynamodb=None):
-    table=None
-    try:
-        if not dynamodb:
-            URL = os.environ['ENDPOINT_OVERRIDE']
-            if URL:
-                print('URL dynamoDB:'+URL)
-                boto3.client = functools.partial(boto3.client, endpoint_url=URL)
-                boto3.resource = functools.partial(boto3.resource,
-                                                   endpoint_url=URL)
-            dynamodb = boto3.resource("dynamodb")
-        # fetch todo from the database
-        table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
-    except KeyError as e:
-        print(e)
-    return table
+    if not dynamodb:
+        URL = 'http://localhost:8000'
+        if URL:
+            print('URL dynamoDB:'+URL)
+            boto3.client = functools.partial(boto3.client, endpoint_url=URL)
+            boto3.resource = functools.partial(boto3.resource,
+                                               endpoint_url=URL)
+        dynamodb = boto3.resource("dynamodb")
+    # fetch todo from the database
+    table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
+return table
 
 
 def get_item(key, dynamodb=None):
     table = get_table(dynamodb)
     try:
-        if key == "":
-            raise ClientError('No existe el item en la tabla')
         result = table.get_item(
             Key={
                 'id': key
@@ -63,8 +57,6 @@ def put_item(text, dynamodb=None):
         'updatedAt': timestamp,
     }
     try:
-        if key == "":
-            raise ClientError('No se puede guardar un item con key vacía')
         # write the todo to the database
         table.put_item(Item=item)
         # create a response
@@ -84,8 +76,6 @@ def update_item(key, text, checked, dynamodb=None):
     timestamp = int(time.time() * 1000)
     # update the todo in the database
     try:
-        if key == "":
-            raise ClientError('No existe el item en la tabla')
         result = table.update_item(
             Key={
                 'id': key
@@ -122,8 +112,6 @@ def delete_item(key, dynamodb=None):
             }
         )
 
-    except ClientError as e:
-        print(e.response['Error']['Message'])
     else:
         return
 
