@@ -146,12 +146,13 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Start: atest_update_todo_error')
         from src.todoList import put_item
         from src.todoList import get_item
+        from src.todoList import update_item
         updated_text = "Aprender más cosas que DevOps y Cloud en la UNIR"
         # Testing file functions
         # Table mock
         responsePut = put_item(self.text, self.dynamodb)
         print ('Response PutItem' + str(responsePut))
-        self.assertRaises(Exception, item = get_item("", self.dynamodb))
+        self.assertRaises(Exception, get_item("", self.dynamodb))
         self.assertRaises(TypeError, update_item("", self.uuid, "false", self.dynamodb))
         self.assertRaises(Exception, update_item(updated_text, self.uuid, "", self.dynamodb))
         print ('End: atest_update_todo_error')
