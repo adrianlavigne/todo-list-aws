@@ -11,7 +11,7 @@ def get_table(dynamodb=None):
     table = None
     try:
         if not dynamodb:
-            URL = 'http://localhost:8000'
+            URL = 'http://192.168.1.1:8000'
             if URL:
                 print('URL dynamoDB:'+URL)
                 boto3.client = functools.partial(boto3.client, endpoint_url=URL)
