@@ -151,22 +151,9 @@ class TestDatabaseFunctions(unittest.TestCase):
         # Table mock
         responsePut = put_item(self.text, self.dynamodb)
         print ('Response PutItem' + str(responsePut))
-        with self.assertRaises(Exception):
-            item = get_item("5", self.dynamodb)
-        self.assertRaises(
-            TypeError,
-            update_item(
-                "",
-                self.uuid,
-                "false",
-                self.dynamodb))
-        self.assertRaises(
-            Exception,
-            update_item(
-                updated_text,
-                self.uuid,
-                "",
-                self.dynamodb))
+        self.assertRaises(Exception, item = get_item("", self.dynamodb))
+        self.assertRaises(TypeError, update_item("", self.uuid, "false", self.dynamodb))
+        self.assertRaises(Exception, update_item(updated_text, self.uuid, "", self.dynamodb))
         print ('End: atest_update_todo_error')
 
     def test_delete_todo(self):
