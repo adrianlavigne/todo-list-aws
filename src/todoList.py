@@ -21,7 +21,7 @@ def get_table(dynamodb=None):
         # fetch todo from the database
         table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
      except KeyError as e:
-            print(e)
+        print(e)
     return table
 
 
