@@ -28,6 +28,8 @@ def get_table(dynamodb=None):
 def get_item(key, dynamodb=None):
     table = get_table(dynamodb)
     try:
+        if key == "":
+            raise ClientError('No existe el item en la tabla')
         result = table.get_item(
             Key={
                 'id': key
@@ -61,6 +63,8 @@ def put_item(text, dynamodb=None):
         'updatedAt': timestamp,
     }
     try:
+        if key == "":
+            raise ClientError('No se puede guardar un item con key vacía')
         # write the todo to the database
         table.put_item(Item=item)
         # create a response
@@ -80,6 +84,8 @@ def update_item(key, text, checked, dynamodb=None):
     timestamp = int(time.time() * 1000)
     # update the todo in the database
     try:
+        if key == "":
+            raise ClientError('No existe el item en la tabla')
         result = table.update_item(
             Key={
                 'id': key
@@ -108,6 +114,8 @@ def delete_item(key, dynamodb=None):
     table = get_table(dynamodb)
     # delete the todo from the database
     try:
+        if key == "":
+            raise ClientError('No existe el item en la tabla')
         table.delete_item(
             Key={
                 'id': key
