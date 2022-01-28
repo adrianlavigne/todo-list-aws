@@ -187,9 +187,8 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Start: test_table_fails')
         # Testing file functions
         from src.todoList import get_table
-        response = get_table(None)
         # check if the table name is 'ToDo'
-        self.assertIn(200, response['statusCode'])
+        self.assertIn(TypeError, get_table(None))
         #self.assertIn('todoTable', self.table_local.name)
         print ('End: test_table_fails')
 
