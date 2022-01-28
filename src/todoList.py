@@ -20,7 +20,7 @@ def get_table(dynamodb=None):
             dynamodb = boto3.resource("dynamodb")
         # fetch todo from the database
         table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
-     except KeyError as e:
+    except KeyError as e:
         print(e)
     return table
 
