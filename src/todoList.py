@@ -31,7 +31,11 @@ def get_item(key, dynamodb=None):
         result = table.get_item(
             Key={
                 'id': key
-            }
+            },
+            ConditionExpression='attribute_exists(:id)',
+            ExpressionAttributeValues={
+              ':id': key,
+            },
         )
 
     except ClientError as e:
@@ -62,7 +66,11 @@ def put_item(text, dynamodb=None):
     }
     try:
         # write the todo to the database
-        table.put_item(Item=item)
+        table.put_item(Item=item,
+            ConditionExpression='attribute_not_exists(:id)',
+            ExpressionAttributeValues={
+              ':id': item.id,
+            })
         # create a response
         response = {
             "statusCode": 200,
@@ -83,6 +91,10 @@ def update_item(key, text, checked, dynamodb=None):
         result = table.update_item(
             Key={
                 'id': key
+            },
+            ConditionExpression='attribute_exists(:id)',
+            ExpressionAttributeValues={
+              ':id': key,
             },
             ExpressionAttributeNames={
               '#todo_text': 'text',
