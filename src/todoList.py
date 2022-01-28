@@ -104,8 +104,6 @@ def delete_item(key, dynamodb=None):
     table = get_table(dynamodb)
     # delete the todo from the database
     try:
-        if key == "":
-            raise ClientError('No existe el item en la tabla')
         table.delete_item(
             Key={
                 'id': key
