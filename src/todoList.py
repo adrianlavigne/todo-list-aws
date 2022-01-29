@@ -11,7 +11,7 @@ def get_table(dynamodb=None):
     table = None
     try:
         if not dynamodb:
-            URL = os.environ.get("BASE_URL")
+            URL = os.environ["ENDPOINT_OVERRIDE"]
             if URL:
                 print('URL dynamoDB:'+URL)
                 boto3.client = functools.partial(boto3.client,
