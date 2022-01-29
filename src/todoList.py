@@ -32,10 +32,6 @@ def get_item(key, dynamodb=None):
             Key={
                 'id': key
             },
-            ConditionExpression='attribute_exists(:id)',
-            ExpressionAttributeValues={
-              ':id': key,
-            },
         )
 
     except ClientError as e:
@@ -67,11 +63,7 @@ def put_item(text, dynamodb=None):
     }
     try:
         # write the todo to the database
-        table.put_item(Item=item,
-            ConditionExpression='attribute_not_exists(:id)',
-            ExpressionAttributeValues={
-              ':id': itemid,
-            })
+        table.put_item(Item=item)
         # create a response
         response = {
             "statusCode": 200,
