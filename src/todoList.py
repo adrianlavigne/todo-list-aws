@@ -57,8 +57,9 @@ def put_item(text, dynamodb=None):
     table = get_table(dynamodb)
     timestamp = str(time.time())
     print('Table name:' + table.name)
+    itemid = str(uuid.uuid1())
     item = {
-        'id': str(uuid.uuid1()),
+        'id': itemid,
         'text': text,
         'checked': False,
         'createdAt': timestamp,
@@ -69,7 +70,7 @@ def put_item(text, dynamodb=None):
         table.put_item(Item=item,
             ConditionExpression='attribute_not_exists(:id)',
             ExpressionAttributeValues={
-              ':id': item.id,
+              ':id': itemid,
             })
         # create a response
         response = {
