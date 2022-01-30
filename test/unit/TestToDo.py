@@ -171,7 +171,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Id item:' + idItem)
         delete_item(idItem, self.dynamodb)
         print ('Item deleted succesfully')
-        self.assertFalse(len(get_items(self.dynamodb)) == 0)
+        self.assertTrue(len(get_items(self.dynamodb)) == 0)
         print ('End: test_delete_todo')
 
     def test_delete_todo_error(self):
