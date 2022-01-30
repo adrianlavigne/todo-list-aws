@@ -1,0 +1,51 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "todo-list-aws"
+<<<<<<< HEAD
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-gqm9v40bypkf" 
+=======
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-gqm9v40bypkf"
+>>>>>>> 40e43d3dec0287a1143954df94a39972f6cbee7e
+s3_prefix = "todo-list-aws"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "Stage=\"default\""
+image_repositories = []
+confirm_changeset = true
+disable_rollback = true
+
+[staging]
+[staging.deploy]
+[staging.deploy.parameters]
+stack_name = "todo-list-aws-staging"
+<<<<<<< HEAD
+s3_bucket = "aws-sam-cli-managed-staging-samclisourcebucket-gqm9v40bypkf" 
+=======
+s3_bucket = "aws-sam-cli-managed-staging-samclisourcebucket-gqm9v40bypkf"
+>>>>>>> 40e43d3dec0287a1143954df94a39972f6cbee7e
+s3_prefix = "todo-list-aws-staging"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "Stage=\"staging\""
+image_repositories = []
+confirm_changeset = true
+disable_rollback = true
+
+[production]
+[production.deploy]
+[production.deploy.parameters]
+stack_name = "todo-list-aws-production"
+<<<<<<< HEAD
+s3_bucket = "aws-sam-cli-managed-production-samclisourcebucket-gqm9v40bypkf" 
+=======
+s3_bucket = "aws-sam-cli-managed-production-samclisourcebucket-gqm9v40bypkf"
+>>>>>>> 40e43d3dec0287a1143954df94a39972f6cbee7e
+s3_prefix = "todo-list-aws-production"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "Stage=\"production\""
+image_repositories = []
+confirm_changeset = true
+disable_rollback = true
