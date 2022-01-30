@@ -114,10 +114,6 @@ def delete_item(key, dynamodb=None):
             Key={
                 'id': key
             },
-            ConditionExpression='attribute_exists(:id)',
-            ExpressionAttributeValues={
-              ':id': key,
-            },
         )
     except ClientError as e:
         print(e.response['Error']['Message'])
