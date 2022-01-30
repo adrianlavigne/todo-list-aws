@@ -47,8 +47,7 @@ pipeline {
                     echo "$BASE_URL"
                     echo 'Initiating Integration Tests'
                     sh "bash pipelines/common-steps/integration.sh $BASE_URL"
-                }
-                   
+                }   
             }
         }
     }
