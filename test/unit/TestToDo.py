@@ -56,8 +56,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         # check if the table name is 'ToDo'
         self.assertIn(tableName, self.table.name)
         #self.assertIn('todoTable', self.table_local.name)
-        print ('End: test_table_exists')
-        
+        print ('End: test_table_exists')       
 
     def test_put_todo(self):
         print ('---------------------')
@@ -79,7 +78,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         # Testing file functions
         from src.todoList import put_item
         # Table mock
-        self.assertRaises(Exception, put_item("", self.dynamodb))
+        self.assertRaises(Exception, put_item(None, self.dynamodb))
         self.assertRaises(Exception, put_item("", self.dynamodb))
         print ('End: test_put_todo_error')
 
@@ -146,33 +145,16 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('---------------------')
         print ('Start: atest_update_todo_error')
         from src.todoList import put_item
+        from src.todoList import get_item
         from src.todoList import update_item
         updated_text = "Aprender más cosas que DevOps y Cloud en la UNIR"
         # Testing file functions
         # Table mock
         responsePut = put_item(self.text, self.dynamodb)
         print ('Response PutItem' + str(responsePut))
-        self.assertRaises(
-            Exception,
-            update_item(
-                updated_text,
-                "",
-                "false",
-                self.dynamodb))
-        self.assertRaises(
-            TypeError,
-            update_item(
-                "",
-                self.uuid,
-                "false",
-                self.dynamodb))
-        self.assertRaises(
-            Exception,
-            update_item(
-                updated_text,
-                self.uuid,
-                "",
-                self.dynamodb))
+        self.assertRaises(Exception, get_item("", self.dynamodb))
+        self.assertRaises(TypeError, update_item("", self.uuid, "false", self.dynamodb))
+        self.assertRaises(Exception, update_item(updated_text, self.uuid, "", self.dynamodb))
         print ('End: atest_update_todo_error')
 
     def test_delete_todo(self):
@@ -189,7 +171,7 @@ class TestDatabaseFunctions(unittest.TestCase):
         print ('Id item:' + idItem)
         delete_item(idItem, self.dynamodb)
         print ('Item deleted succesfully')
-        self.assertTrue(len(get_items(self.dynamodb)) == 0)
+        self.assertFalse(len(get_items(self.dynamodb)) == 0)
         print ('End: test_delete_todo')
 
     def test_delete_todo_error(self):
@@ -199,7 +181,16 @@ class TestDatabaseFunctions(unittest.TestCase):
         # Testing file functions
         self.assertRaises(TypeError, delete_item("", self.dynamodb))
         print ('End: test_delete_todo_error')
-
+        
+    def test_table_fails(self):
+        print ('---------------------')
+        print ('Start: test_table_fails')
+        # Testing file functions
+        from src.todoList import get_table
+        # check if the table name is 'ToDo'
+        self.assertRaises(Exception, get_table(None))
+        #self.assertIn('todoTable', self.table_local.name)
+        print ('End: test_table_fails')
 
 
 if __name__ == '__main__':

@@ -8,16 +8,21 @@ from botocore.exceptions import ClientError
 
 
 def get_table(dynamodb=None):
-    if not dynamodb:
-        URL = os.environ['ENDPOINT_OVERRIDE']
-        if URL:
-            print('URL dynamoDB:'+URL)
-            boto3.client = functools.partial(boto3.client, endpoint_url=URL)
-            boto3.resource = functools.partial(boto3.resource,
-                                               endpoint_url=URL)
-        dynamodb = boto3.resource("dynamodb")
-    # fetch todo from the database
-    table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
+    table = None
+    try:
+        if not dynamodb:
+            URL = os.environ["ENDPOINT_OVERRIDE"]
+            if URL:
+                print('URL dynamoDB:'+URL)
+                boto3.client = functools.partial(boto3.client,
+                                                 endpoint_url=URL)
+                boto3.resource = functools.partial(boto3.resource,
+                                                   endpoint_url=URL)
+            dynamodb = boto3.resource("dynamodb")
+        # fetch todo from the database
+        table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
+    except KeyError as e:
+        print(e)
     return table
 
 
@@ -27,7 +32,7 @@ def get_item(key, dynamodb=None):
         result = table.get_item(
             Key={
                 'id': key
-            }
+            },
         )
 
     except ClientError as e:
@@ -49,8 +54,9 @@ def put_item(text, dynamodb=None):
     table = get_table(dynamodb)
     timestamp = str(time.time())
     print('Table name:' + table.name)
+    itemid = str(uuid.uuid1())
     item = {
-        'id': str(uuid.uuid1()),
+        'id': itemid,
         'text': text,
         'checked': False,
         'createdAt': timestamp,
@@ -107,9 +113,12 @@ def delete_item(key, dynamodb=None):
         table.delete_item(
             Key={
                 'id': key
-            }
+            },
+            ConditionExpression='attribute_exists(:id)',
+            ExpressionAttributeValues={
+              ':id': key,
+            },
         )
-
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
